@@ -4,15 +4,13 @@ import ClaudeRecipe from "./ClaudeRecipe"
 import { getRecipeFromChefClaude, getRecipeFromMistral } from "../ai"
 
 export default function Main() {
-    const [ingredients, setIngredients] = React.useState(
-        ["chicken", "all the main spices", "corn", "heavy cream", "pasta"]
-    )
+    const [ingredients, setIngredients] = React.useState([])
     const [recipe, setRecipe] = React.useState("")
     const recipeSection = React.useRef(null)
     
     React.useEffect(() => {
         if (recipe !== "" && recipeSection.current !== null) {
-            // recipeSection.current.scrollIntoView({behavior: "smooth"})
+            recipeSection.current.scrollIntoView({behavior: "smooth"})
             const yCoord = recipeSection.current.getBoundingClientRect().top + window.scrollY
             window.scroll({
                 top: yCoord,
@@ -22,7 +20,7 @@ export default function Main() {
     }, [recipe])
 
     async function getRecipe() {
-        const recipeMarkdown = await getRecipeFromChefClaude(ingredients)
+        const recipeMarkdown = await getRecipeFromMistral(ingredients)
         setRecipe(recipeMarkdown)
     }
 
